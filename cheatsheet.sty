@@ -1,0 +1,209 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cheatsheet}[2022/02/10 Cheatsheet package]
+
+%-------------------------------------------------------------------------------
+%                3rd party packages
+%-------------------------------------------------------------------------------
+% 
+\RequirePackage[utf8]{inputenc}
+% 
+\RequirePackage[T1]{fontenc}
+% Needed to configure page layout
+\RequirePackage[landscape]{geometry}
+% Needed to make header & footer effeciently
+\RequirePackage{fancyhdr}
+% Needed to manage colors
+\RequirePackage{xcolor}
+% Needed to deal hyperlink
+\RequirePackage[hidelinks,unicode,pdfencoding=auto]{hyperref}
+% Needed to create multicolumn environment
+\RequirePackage{multicol}
+% Needed for math
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb}
+% Needed for color and graphics
+\RequirePackage{color,graphicx,overpic}
+% Needed to present code
+\RequirePackage{listings}
+% less space for headers
+\RequirePackage[compact]{titlesec} 
+% less space for lists
+\RequirePackage{mdwlist} 
+% 
+\RequirePackage{pdflscape}
+% 
+\RequirePackage{verbatim}
+% Needed to create boxes
+\RequirePackage[most]{tcolorbox}
+% 
+\RequirePackage{bussproofs}
+% Needed to create header and footer
+\RequirePackage{fancyhdr}
+% Needed to get last page of document
+\RequirePackage{lastpage}
+
+%-------------------------------------------------------------------------------
+%                Configuration for options
+%-------------------------------------------------------------------------------
+% Defines the date for letter (cover letter only)
+% Usage: \letterdate{<date>}
+\newcommand*{\cheatsheettitle}[1]{\def\@cheatsheettitle{#1}}
+\newcommand*{\cheatsheetauthor}[1]{\def\@cheatsheetauthor{#1}}
+
+
+%-------------------------------------------------------------------------------
+%                Configuration for layout
+%-------------------------------------------------------------------------------
+%% Page Layout
+% Configure page margins with geometry
+\geometry{top=1.3cm, left=1cm, right=1cm, bottom=1.2cm, footskip=.5cm} 
+
+%% Header & Footer
+% Set offset to each header and footer
+\fancyhfoffset{0em}
+% Remove head rule
+\renewcommand{\headrulewidth}{0pt}
+% Clear all header & footer fields
+\fancyhf{}
+% Enable if you want to make header or footer using fancyhdr
+\pagestyle{fancy}
+
+%-------------------------------------------------------------------------------
+%                Configuration for colors
+%-------------------------------------------------------------------------------
+% Basic colors
+\definecolor{green}{HTML}{C2E15F}
+\definecolor{orange}{HTML}{FDA333}
+\definecolor{purple}{HTML}{D3A4F9}
+\definecolor{yellow}{HTML}{EBE64B}
+\definecolor{red}{HTML}{FB4485}
+\definecolor{blue}{HTML}{6CE0F1}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeback}{rgb}{0.95,0.95,0.92}
+
+%-------------------------------------------------------------------------------
+%                Configuration for styles
+%-------------------------------------------------------------------------------
+
+% header and footer style
+\pagestyle{fancy}
+\fancyhf{}
+% header title
+\fancyhead[L]{\@cheatsheettitle}
+% show current and total pages
+\fancyfoot[L]{\thepage/\pageref{LastPage}}
+% top bar
+\renewcommand{\headrulewidth}{0pt} 
+% bottom bar
+\renewcommand{\footrulewidth}{0pt}
+
+%%% Code Listings
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{codeback},   % choose the background color;
+  basicstyle=\ttfamily,            % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{codegreen}\textit,    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{magenta}\bfseries,       % keyword style
+  language=Python,                 % the language of the code (can be overrided per snippet)
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{codegray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{codepurple}, % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed                    % Using fixed column width (for e.g. nice alignment)
+}
+\lstset{style=mystyle, upquote=true}
+
+%textmarker style from colorbox doc
+\tcbset{textmarker/.style={%
+ enhanced,
+ parbox=false,boxrule=0mm,boxsep=0mm,arc=0mm,
+ outer arc=0mm,left=2mm,right=2mm,top=3pt,bottom=3pt,
+ toptitle=1mm,bottomtitle=1mm,oversize}}
+
+% define new colorboxes
+\newtcolorbox{hintBox}{textmarker,
+ borderline west={6pt}{0pt}{yellow},
+ colback=yellow!10!white}
+\newtcolorbox{importantBox}{textmarker,
+ borderline west={6pt}{0pt}{red},
+ colback=red!10!white}
+\newtcolorbox{noteBox}{textmarker,
+ borderline west={3pt}{0pt}{green},
+ colback=green!10!white}
+
+% define commands for easy access
+\renewcommand{\note}[2]{\begin{noteBox} \textbf{#1} #2 \end{noteBox}}
+\newcommand{\warning}[1]{\begin{hintBox} \textbf{Warning:} #1 \end{hintBox}}
+\newcommand{\important}[1]{\begin{importantBox} \textbf{Important:} #1 \end{importantBox}}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+ {-1ex plus -.5ex minus -.2ex}%
+ {0.5ex plus .2ex}%x
+ {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+ {-1explus -.5ex minus -.2ex}%
+ {0.5ex plus .2ex}%
+ {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+ {-1ex plus -.5ex minus -.2ex}%
+ {1ex plus .2ex}%
+ {\normalfont\small\bfseries}}
+\makeatother
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+% compress space
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt} 
+\setlength\abovedisplayskip{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{5pt}
+\setlength{\columnsep}{.8cm}
+\linespread{0.5}
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\raggedright
+
+%-------------------------------------------------------------------------------
+%                Configuration other
+%-------------------------------------------------------------------------------
+\hypersetup{%
+  pdftitle={\@cheatsheettitle - Cheatsheet},
+  pdfauthor={\@cheatsheetauthor},
+  pdfsubject={\@cheatsheettitle},
+  pdfkeywords={\@cheatsheettitle, Cheatsheet}
+}
+
+\pdfinfo{
+ /Title (\@cheatsheettitle - Cheatsheet)
+ /Creator (TeX)
+ /Producer (pdfTeX 1.40.0)
+ /Author (\@cheatsheetauthor)
+ /Subject ()
+}
+
