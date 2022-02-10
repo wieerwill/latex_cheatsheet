@@ -1,0 +1,80 @@
+\documentclass[a4paper]{article}
+\usepackage[ngerman]{babel}
+\usepackage{cheatsheet}
+
+\cheatsheettitle{Cheatsheet Example}
+\cheatsheetauthor{Robert Jeutter}
+
+\begin{document}
+
+\begin{multicols}{3}\scriptsize
+
+    \section{Introduction}
+    \subsection{Lists}
+    % use * to reduce required space
+    Item lists
+    \begin{itemize*}
+        \item This is
+        \item a small list
+        \item to show some
+        \item space
+    \end{itemize*}
+
+    Enumeration Lists
+    \begin{enumerate*}
+        \item This is
+        \item a small list
+        \item to show some
+        \item space
+    \end{enumerate*}
+
+    Description Lists
+    \begin{enumerate*}
+        \item[This] is a
+        \item[Small] list to
+        \item[Show] some space
+    \end{enumerate*}
+
+    \columnbreak
+
+    \section{Boxes}
+
+    \note{Note Title}{This is a little but helpful note you can use to highlight informations}
+
+    \warning{This is a warning box. Warning always prepend ,,Warning''.}
+
+    \important{This might be something important to remember! Therefore it prepends ,,Important''}
+
+
+    \begin{tabular}{r|p{0.8\textwidth}}\scriptsize
+        84 & \href{http://www.gutenberg.org/ebooks/84}{Frankenstein; Or, The Modern Prometheus by Mary Wollstonecraft Shelley} \\
+        6087 & \href{https://www.gutenberg.org/ebooks/6087}{The Vampyre; a Tale by John William Polidori} \\
+        696 & \href{https://www.gutenberg.org/ebooks/696}{The Castle of Otranto by Horace Walpole} \\
+        42 & \href{https://www.gutenberg.org/ebooks/42}{The Strange Case of Dr. Jekyll and Mr. Hyde by Robert Louis Stevenson}
+    \end{tabular}
+    
+    \columnbreak 
+
+    \section{Code}
+    \begin{lstlisting}
+    
+    main(void){
+        for(int i=0; i<10; i++ ){
+            //do something here 
+            x+= 2;
+        }
+        echo("The loop is finished")
+    }
+    \end{lstlisting}
+
+
+    \section{Tables}
+    \begin{tabular}{l|c|r}
+        Nr & Sign & Code \\\hline
+        1 & $\Omega$ & $\backslash$Omega \\
+        2 & $\Theta$ & $\backslash$Theta \\
+        3 & $\rho$ & $\backslash$rho 
+    \end{tabular}
+
+\end{multicols}
+\end{document}
