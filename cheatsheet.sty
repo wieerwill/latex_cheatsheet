@@ -40,6 +40,8 @@
 \RequirePackage{fancyhdr}
 % Needed to get last page of document
 \RequirePackage{lastpage}
+% Tables
+\usepackage{tabularx}
 
 %-------------------------------------------------------------------------------
 %                Configuration for options
@@ -98,6 +100,11 @@
 % bottom bar
 \renewcommand{\footrulewidth}{0pt}
 
+%%% Tables
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
 %%% Code Listings
 \lstdefinestyle{mystyle}{
   backgroundcolor=\color{codeback},   % choose the background color;
@@ -138,19 +145,47 @@
 
 % define new colorboxes
 \newtcolorbox{hintBox}{textmarker,
- borderline west={6pt}{0pt}{yellow},
+ borderline west={4pt}{0pt}{yellow},
  colback=yellow!10!white}
 \newtcolorbox{importantBox}{textmarker,
- borderline west={6pt}{0pt}{red},
+ borderline west={4pt}{0pt}{red},
  colback=red!10!white}
 \newtcolorbox{noteBox}{textmarker,
- borderline west={3pt}{0pt}{green},
+ borderline west={4pt}{0pt}{green},
  colback=green!10!white}
+ \newtcolorbox{redbox}{leftrule=3mm, 
+  colback=red!5!white,colframe=red!75!black
+ }
+ % define new text higlights
+ \newtcbox{\lhigh}[1][red]{on line, arc=0pt,outer arc=0pt,colback=#1!10!white,colframe=#1!50!black, boxsep=0pt,left=0pt,right=0pt,top=1pt,bottom=1pt, boxrule=0pt,bottomrule=1pt,toprule=1pt}
+ \newtcbox{\rhigh}[1][red]{on line, arc=7pt,colback=#1!10!white,colframe=#1!50!black, before upper={\rule[-3pt]{0pt}{10pt}},boxrule=.5pt, boxsep=0pt,left=2.5pt,right=2.5pt,top=0pt,bottom=0pt}
 
 % define commands for easy access
 \renewcommand{\note}[2]{\begin{noteBox} \textbf{#1} #2 \end{noteBox}}
-\newcommand{\warning}[1]{\begin{hintBox} \textbf{Warning:} #1 \end{hintBox}}
-\newcommand{\important}[1]{\begin{importantBox} \textbf{Important:} #1 \end{importantBox}}
+\newcommand{\warning}[2]{\begin{hintBox} \textbf{#1} #2 \end{hintBox}}
+\newcommand{\important}[2]{\begin{importantBox} \textbf{#1} #2 \end{importantBox}}
+\newcommand{\headnote}[2]{
+  \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=#1] #2 \end{tcolorbox}
+}
+\newcommand{\headcenternote}[2]{
+  \newtcolorbox{mybox}[2][]{colback=red!5!white,
+      colframe=red!75!black,fonttitle=\bfseries,
+      colbacktitle=red!85!black,enhanced,
+      attach boxed title to top center={yshift=-2mm},
+      title={#2},#1}
+  \begin{mybox}[colback=yellow]{#1} #2 \end{mybox}
+}
+
+% define cardbox
+\newcommand{\flashcard}[4]{
+  \vspace{.1cm}
+  \fbox{\parbox[t][1in][c]{2in}{%
+        \footnotesize\textsc{#1}\par\vspace*{\fill}\par
+        \centerline{\textbf{#2}}\par\vspace*{\fill}\par
+        \hspace*{\fill}\textsc{#3}}}
+    \fbox{\parbox[t][1in][c]{2in}{%
+        \footnotesize\vspace*{\fill}\par\begin{center} #4 \end{center}\par\vspace*{\fill}}}
+  }
 
 % Redefine section commands to use less space
 \makeatletter
